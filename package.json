@@ -1,0 +1,31 @@
+{
+  "name": "hackathon-website-aharada",
+  "version": "1.0.0",
+  "description": "Official website and team registration portal for Aharada Kaushal Kumbh 2026",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nitin-data-domain/Hackathon-website-Aharada.git"
+  },
+  "keywords": [
+    "hackathon",
+    "aharada",
+    "registration"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "multer": "^2.4.0",
+    "sqlite3": "^6.0.1"
+  }
+}

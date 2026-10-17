@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKK 2026 | Admin Portal - Team Registrations</title>
+    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        body {
+            background-color: #020914;
+            color: #e0e6ed;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Admin Layout */
+        .admin-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px 80px;
+        }
+
+        .admin-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: rgba(9, 20, 37, 0.9);
+            border: 1px solid rgba(94, 255, 255, 0.25);
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .admin-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-brand img {
+            height: 42px;
+            border-radius: 4px;
+        }
+
+        .admin-brand h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            margin: 0;
+            color: #fff;
+            letter-spacing: 1.5px;
+        }
+
+        .admin-brand span {
+            color: var(--accent);
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 2px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-admin {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: #01060e;
+            box-shadow: 0 0 15px rgba(94, 255, 255, 0.4);
+        }
+
+        .btn-success {
+            background: rgba(0, 230, 118, 0.15);
+            border: 1px solid #00e676;
+            color: #00e676;
+        }
+
+        .btn-success:hover {
+            background: #00e676;
+            color: #01060e;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+        }
+
+        /* KPI Cards Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: rgba(9, 20, 37, 0.8);
+            border: 1px solid rgba(94, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 20px 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--kpi-color, var(--accent));
+        }
+
+        .kpi-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            color: #8496a8;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .kpi-val {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .kpi-sub {
+            font-size: 0.85rem;
+            color: #a0a0b0;
+            margin-top: 5px;
+        }
+
+        /* Filter & Search Bar */
+        .filter-panel {
+            background: rgba(9, 20, 37, 0.8);
+            border: 1px solid rgba(94, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 40px;
+            background: rgba(1, 6, 14, 0.7);
+            border: 1px solid rgba(94, 255, 255, 0.25);
+            border-radius: 4px;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(94, 255, 255, 0.2);
+        }
+
+        .filter-selects {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-selects select {
+            padding: 10px 14px;
+            background: rgba(1, 6, 14, 0.7);
+            border: 1px solid rgba(94, 255, 255, 0.25);
+            border-radius: 4px;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        /* Table Styling */
+        .table-container {
+            background: rgba(9, 20, 37, 0.85);
+            border: 1px solid rgba(94, 255, 255, 0.2);
+            border-radius: 8px;
+            overflow-x: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(1, 6, 14, 0.95);
+            padding: 16px 18px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            border-bottom: 2px solid rgba(94, 255, 255, 0.25);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 16px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: rgba(94, 255, 255, 0.03);
+        }
+
+        /* Badges */
+        .badge-year {
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(94, 255, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .badge-diversity-ok {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            background: rgba(0, 230, 118, 0.15);
+            color: #00e676;
+            border: 1px solid rgba(0, 230, 118, 0.3);
+            border-radius: 3px;
+            font-size: 0.75rem;
+        }
+
+        .badge-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .status-verified {
+            background: rgba(0, 230, 118, 0.15);
+            color: #00e676;
+            border: 1px solid #00e676;
+        }
+
+        .status-pending {
+            background: rgba(255, 179, 0, 0.15);
+            color: #ffb300;
+            border: 1px solid #ffb300;
+        }
+
+        .status-rejected {
+            background: rgba(255, 68, 68, 0.15);
+            color: #ff4444;
+            border: 1px solid #ff4444;
+        }
+
+        .btn-table {
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-view-proof {
+            background: rgba(94, 255, 255, 0.15);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .btn-view-proof:hover {
+            background: var(--accent);
+            color: #01060e;
+        }
+
+        .btn-verify {
+            background: rgba(0, 230, 118, 0.15);
+            color: #00e676;
+            border: 1px solid #00e676;
+        }
+
+        .btn-verify:hover {
+            background: #00e676;
+            color: #01060e;
+        }
+
+        .btn-unverify {
+            background: rgba(255, 179, 0, 0.15);
+            color: #ffb300;
+            border: 1px solid #ffb300;
+        }
+
+        .btn-unverify:hover {
+            background: #ffb300;
+            color: #01060e;
+        }
+
+        .btn-delete {
+            background: rgba(255, 68, 68, 0.15);
+            color: #ff4444;
+            border: 1px solid #ff4444;
+        }
+
+        .btn-delete:hover {
+            background: #ff4444;
+            color: #fff;
+        }
+
+        /* Modal / Lightbox */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #091425;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            max-width: 650px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 25px 30px;
+            position: relative;
+            box-shadow: 0 0 40px rgba(94, 255, 255, 0.2);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 18px;
+            color: #8496a8;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+        }
+
+        .screenshot-img-wrap {
+            text-align: center;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 10px;
+            margin: 15px 0;
+        }
+
+        .screenshot-img-wrap img {
+            max-width: 100%;
+            max-height: 480px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        /* Password Gate */
+        #loginGate {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #020914;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(9, 20, 37, 0.95);
+            border: 1px solid var(--accent);
+            padding: 40px 35px;
+            border-radius: 8px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 35px rgba(94, 255, 255, 0.2);
+        }
+
+        .login-card h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .login-card p {
+            color: #8496a8;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(1, 6, 14, 0.8);
+            border: 1px solid rgba(94, 255, 255, 0.3);
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Rajdhani', sans-serif;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .login-card button {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: #01060e;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-card button:hover {
+            box-shadow: 0 0 20px rgba(94, 255, 255, 0.5);
+        }
+
+        .member-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(1, 6, 14, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin: 2px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Security Gate -->
+    <div id="loginGate">
+        <div class="login-card">
+            <img src="logo.jpg" alt="Logo" style="height: 60px; margin-bottom: 15px; border-radius: 6px;">
+            <h2>ADMIN ACCESS</h2>
+            <p>AHARADA KAUSHAL KUMBH 2026</p>
+            <input type="password" id="adminPass" placeholder="ENTER ADMIN PASSKEY" autofocus onkeydown="if(event.key==='Enter') verifyPass()">
+            <button type="button" onclick="verifyPass()">UNLOCK CONSOLE</button>
+            <p id="loginError" style="color: #ff4444; font-size: 0.85rem; margin-top: 15px; display: none;">Invalid passkey. Please try again.</p>
+        </div>
+    </div>
+
+    <!-- Admin Content -->
+    <div class="admin-wrapper" id="adminContent" style="display: none;">
+        
+        <!-- Navigation Header -->
+        <header class="admin-nav">
+            <div class="admin-brand">
+                <img src="logo.jpg" alt="Logo">
+                <div>
+                    <h1>AHARADA KAUSHAL KUMBH</h1>
+                    <span>REGISTRATIONS &amp; PAYMENT CONSOLE</span>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <a href="/" class="btn-admin btn-outline"><i class="fas fa-external-link-alt"></i> MAIN SITE</a>
+                <a href="/api/admin/export-csv" class="btn-admin btn-success"><i class="fas fa-file-excel"></i> EXPORT CSV</a>
+                <button class="btn-admin btn-outline" onclick="loadRegistrations()"><i class="fas fa-sync-alt"></i> REFRESH</button>
+                <button class="btn-admin" style="background: rgba(255,68,68,0.1); border: 1px solid #ff4444; color: #ff4444;" onclick="logout()"><i class="fas fa-lock"></i> LOCK</button>
+            </div>
+        </header>
+
+        <!-- KPI Metric Cards -->
+        <section class="kpi-grid">
+            <div class="kpi-card" style="--kpi-color: #5effff;">
+                <div class="kpi-label"><span>TOTAL TEAMS</span> <i class="fas fa-users text-accent"></i></div>
+                <div class="kpi-val" id="statTeams">0</div>
+                <div class="kpi-sub">Registered Hackathon Teams</div>
+            </div>
+
+            <div class="kpi-card" style="--kpi-color: #b000ff;">
+                <div class="kpi-label"><span>PARTICIPANTS</span> <i class="fas fa-user-graduate" style="color: #b000ff;"></i></div>
+                <div class="kpi-val" id="statParticipants">0</div>
+                <div class="kpi-sub">Total Students Competing</div>
+            </div>
+
+            <div class="kpi-card" style="--kpi-color: #ffd700;">
+                <div class="kpi-label"><span>REVENUE (EST.)</span> <i class="fas fa-rupee-sign" style="color: #ffd700;"></i></div>
+                <div class="kpi-val" id="statRevenue">₹0</div>
+                <div class="kpi-sub">@ ₹500 per team</div>
+            </div>
+
+            <div class="kpi-card" style="--kpi-color: #00e676;">
+                <div class="kpi-label"><span>PAYMENT STATUS</span> <i class="fas fa-check-double" style="color: #00e676;"></i></div>
+                <div class="kpi-val" style="font-size: 1.5rem;" id="statPayments">0 Verified / 0 Pending</div>
+                <div class="kpi-sub" id="statPaymentRatio">0% Verified</div>
+            </div>
+        </section>
+
+        <!-- Search and Filter Bar -->
+        <section class="filter-panel">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by team, leader, college, or transaction ID..." onkeyup="filterTable()">
+            </div>
+            <div class="filter-selects">
+                <select id="filterTrack" onchange="filterTable()">
+                    <option value="">ALL PROBLEM STATEMENTS</option>
+                </select>
+                <select id="filterStatus" onchange="filterTable()">
+                    <option value="">ALL PAYMENT STATUSES</option>
+                    <option value="Verified">Verified</option>
+                    <option value="Pending">Pending</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Teams Data Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>TEAM</th>
+                        <th>LEADER &amp; COLLEGE</th>
+                        <th>MEMBERS &amp; YEAR DIVERSITY</th>
+                        <th>PROBLEM TRACK</th>
+                        <th>PAYMENT PROOF</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="teamsTableBody">
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 40px; color: #8496a8;">
+                            <i class="fas fa-spinner fa-spin fa-2x mb-3 text-accent"></i><br>
+                            Loading registration database...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Payment Proof Modal -->
+    <div class="modal-overlay" id="proofModal">
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeModal('proofModal')">&times;</span>
+            <h3 class="modal-title"><i class="fas fa-receipt"></i> PAYMENT PROOF</h3>
+            <div id="proofModalContent"></div>
+        </div>
+    </div>
+
+    <!-- Team Details Modal -->
+    <div class="modal-overlay" id="detailsModal">
+        <div class="modal-box" style="max-width: 750px;">
+            <span class="modal-close" onclick="closeModal('detailsModal')">&times;</span>
+            <h3 class="modal-title"><i class="fas fa-info-circle"></i> TEAM REGISTRATION DETAILS</h3>
+            <div id="detailsModalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        let allTeams = [];
+        const DEFAULT_PASS = "admin123";
+
+        // Check login state
+        if (sessionStorage.getItem('akk_admin_auth') === 'true') {
+            document.getElementById('loginGate').style.display = 'none';
+            document.getElementById('adminContent').style.display = 'block';
+            loadRegistrations();
+        }
+
+        function verifyPass() {
+            const val = document.getElementById('adminPass').value;
+            if (val === DEFAULT_PASS || val === "akk2026") {
+                sessionStorage.setItem('akk_admin_auth', 'true');
+                document.getElementById('loginGate').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                loadRegistrations();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('akk_admin_auth');
+            location.reload();
+        }
+
+        async function loadRegistrations() {
+            try {
+                const res = await fetch('/api/admin/registrations');
+                const result = await res.json();
+                if (result.status === 'success') {
+                    allTeams = result.data || [];
+                    updateKPIs(result.stats);
+                    populateTrackFilter(result.stats.tracks);
+                    renderTable(allTeams);
+                }
+            } catch (err) {
+                console.error("Error loading registrations:", err);
+                document.getElementById('teamsTableBody').innerHTML = `
+                    <tr><td colspan="8" style="text-align: center; color: #ff4444; padding: 30px;">
+                        Failed to connect to backend server. Make sure app.py is running.
+                    </td></tr>
+                `;
+            }
+        }
+
+        function updateKPIs(stats) {
+            document.getElementById('statTeams').innerText = stats.total_teams || 0;
+            document.getElementById('statParticipants').innerText = stats.total_participants || 0;
+            document.getElementById('statRevenue').innerText = `₹${(stats.total_revenue || 0).toLocaleString()}`;
+            document.getElementById('statPayments').innerText = `${stats.verified_payments || 0} Verified / ${stats.pending_payments || 0} Pending`;
+            const pct = stats.total_teams ? Math.round((stats.verified_payments / stats.total_teams) * 100) : 0;
+            document.getElementById('statPaymentRatio').innerText = `${pct}% Verified`;
+        }
+
+        function populateTrackFilter(tracks) {
+            const select = document.getElementById('filterTrack');
+            select.innerHTML = '<option value="">ALL PROBLEM STATEMENTS</option>';
+            if (!tracks) return;
+            Object.keys(tracks).forEach(track => {
+                select.innerHTML += `<option value="${escapeHtml(track)}">${escapeHtml(track)} (${tracks[track]})</option>`;
+            });
+        }
+
+        function renderTable(teams) {
+            const tbody = document.getElementById('teamsTableBody');
+            if (!teams.length) {
+                tbody.innerHTML = `
+                    <tr><td colspan="8" style="text-align: center; padding: 40px; color: #8496a8;">
+                        No registrations found matching the filters.
+                    </td></tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = teams.map(t => {
+                const statusClass = t.payment_status === 'Verified' ? 'status-verified' : (t.payment_status === 'Rejected' ? 'status-rejected' : 'status-pending');
+                const members = Array.isArray(t.members) ? t.members : [];
+                
+                // Determine year diversity
+                const years = [t.leader_year || '1st Year', ...members.map(m => m.year || '1st Year')];
+                const uniqueYears = [...new Set(years)];
+                const isDiverse = uniqueYears.length >= 2;
+
+                return `
+                    <tr>
+                        <td style="font-family: 'Orbitron', sans-serif; font-weight: 700; color: var(--accent);">#${t.id}</td>
+                        <td>
+                            <strong style="color: #fff; font-size: 1.05rem;">${escapeHtml(t.team_name)}</strong><br>
+                            <span style="font-size: 0.8rem; color: #8496a8;">Size: ${t.team_size} Members</span>
+                        </td>
+                        <td>
+                            <strong>${escapeHtml(t.leader_name)}</strong> 
+                            <span class="badge-year">${escapeHtml(t.leader_year || '1st Year')}</span><br>
+                            <span style="font-size: 0.85rem; color: #8496a8;"><i class="fas fa-university text-accent"></i> ${escapeHtml(t.college)}</span><br>
+                            <span style="font-size: 0.8rem; color: #b0bec5;"><i class="fas fa-envelope"></i> ${escapeHtml(t.email)} | <i class="fas fa-phone"></i> ${escapeHtml(t.phone)}</span>
+                        </td>
+                        <td>
+                            <div style="margin-bottom: 5px;">
+                                ${isDiverse 
+                                    ? '<span class="badge-diversity-ok"><i class="fas fa-check-circle"></i> Variation OK (${uniqueYears.join(", ")})</span>' 
+                                    : '<span style="color: #ffb300; font-size: 0.75rem;"><i class="fas fa-exclamation-triangle"></i> Same Year (${uniqueYears.join(", ")})</span>'}
+                            </div>
+                            ${members.map((m, i) => `
+                                <div class="member-chip">
+                                    <span>#${i+2} ${escapeHtml(m.name || 'Member')}</span>
+                                    <span class="badge-year" style="font-size: 0.65rem;">${escapeHtml(m.year || '1st Year')}</span>
+                                </div>
+                            `).join('')}
+                        </td>
+                        <td>
+                            <span style="font-weight: 600; color: #ffd700; font-size: 0.9rem;">${escapeHtml(t.problem_statement)}</span>
+                        </td>
+                        <td>
+                            <div style="font-size: 0.85rem; margin-bottom: 4px;">
+                                <strong>UTR:</strong> ${t.transaction_id ? `<code style="color: var(--accent);">${escapeHtml(t.transaction_id)}</code>` : '<span style="color: #8496a8;">None</span>'}
+                            </div>
+                            ${t.payment_screenshot ? `
+                                <button class="btn-table btn-view-proof" onclick="viewScreenshot('${t.id}', '${escapeHtml(t.team_name)}', '${t.transaction_id}', '${t.payment_screenshot}')">
+                                    <i class="fas fa-image"></i> View Receipt
+                                </button>
+                            ` : '<span style="color: #8496a8; font-size: 0.8rem;">No file</span>'}
+                        </td>
+                        <td>
+                            <span class="badge-status ${statusClass}">
+                                <i class="fas ${t.payment_status === 'Verified' ? 'fa-check-circle' : 'fa-clock'}"></i>
+                                ${escapeHtml(t.payment_status || 'Pending')}
+                            </span>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                ${t.payment_status === 'Verified' ? `
+                                    <button class="btn-table btn-unverify" title="Mark as Pending" onclick="verifyTeam(${t.id}, 'Pending')">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                ` : `
+                                    <button class="btn-table btn-verify" title="Verify Payment" onclick="verifyTeam(${t.id}, 'Verified')">
+                                        <i class="fas fa-check"></i> Verify
+                                    </button>
+                                `}
+                                <button class="btn-table btn-view-proof" title="Full Details" onclick="viewDetails(${t.id})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-table btn-delete" title="Delete Team" onclick="deleteTeam(${t.id}, '${escapeHtml(t.team_name)}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const track = document.getElementById('filterTrack').value;
+            const status = document.getElementById('filterStatus').value;
+
+            const filtered = allTeams.filter(t => {
+                const matchQuery = !query || 
+                    (t.team_name && t.team_name.toLowerCase().includes(query)) ||
+                    (t.leader_name && t.leader_name.toLowerCase().includes(query)) ||
+                    (t.college && t.college.toLowerCase().includes(query)) ||
+                    (t.transaction_id && t.transaction_id.toLowerCase().includes(query)) ||
+                    (t.email && t.email.toLowerCase().includes(query));
+
+                const matchTrack = !track || t.problem_statement === track;
+                const matchStatus = !status || t.payment_status === status;
+
+                return matchQuery && matchTrack && matchStatus;
+            });
+
+            renderTable(filtered);
+        }
+
+        async function verifyTeam(teamId, newStatus) {
+            try {
+                const res = await fetch('/api/admin/verify-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ teamId, status: newStatus })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    loadRegistrations();
+                } else {
+                    alert("Error: " + result.message);
+                }
+            } catch (err) {
+                alert("Request failed: " + err.message);
+            }
+        }
+
+        async function deleteTeam(teamId, teamName) {
+            if (!confirm(`Are you sure you want to permanently delete team "${teamName}" (#${teamId})?`)) return;
+            try {
+                const res = await fetch(`/api/admin/delete-team/${teamId}`, { method: 'DELETE' });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    loadRegistrations();
+                } else {
+                    alert("Error: " + result.message);
+                }
+            } catch (err) {
+                alert("Delete failed: " + err.message);
+            }
+        }
+
+        function viewScreenshot(id, teamName, utr, filename) {
+            const content = document.getElementById('proofModalContent');
+            const imgUrl = `/uploads/${encodeURIComponent(filename)}`;
+            content.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    <strong style="color: #fff; font-size: 1.1rem;">Team: ${escapeHtml(teamName)} (#${id})</strong><br>
+                    <span style="color: var(--accent);">UTR / Transaction ID: ${escapeHtml(utr || 'Not provided')}</span>
+                </div>
+                <div class="screenshot-img-wrap">
+                    <img src="${imgUrl}" alt="Payment Screenshot" onerror="this.onerror=null; this.src='payment_qr.jpg';">
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                    <a href="${imgUrl}" target="_blank" class="btn-admin btn-outline"><i class="fas fa-external-link-alt"></i> Open Full Image</a>
+                    <button class="btn-admin btn-success" onclick="verifyTeam(${id}, 'Verified'); closeModal('proofModal');"><i class="fas fa-check"></i> Verify This Payment</button>
+                </div>
+            `;
+            document.getElementById('proofModal').classList.add('active');
+        }
+
+        function viewDetails(teamId) {
+            const t = allTeams.find(team => team.id == teamId);
+            if (!t) return;
+
+            const members = Array.isArray(t.members) ? t.members : [];
+            const content = document.getElementById('detailsModalContent');
+
+            content.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div style="background: rgba(1,6,14,0.6); padding: 12px; border-radius: 4px;">
+                        <span style="color: #8496a8; font-size: 0.8rem;">TEAM NAME</span>
+                        <div style="font-size: 1.1rem; color: #fff; font-weight: 700;">${escapeHtml(t.team_name)}</div>
+                    </div>
+                    <div style="background: rgba(1,6,14,0.6); padding: 12px; border-radius: 4px;">
+                        <span style="color: #8496a8; font-size: 0.8rem;">PROBLEM STATEMENT</span>
+                        <div style="font-size: 1rem; color: #ffd700; font-weight: 600;">${escapeHtml(t.problem_statement)}</div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(1,6,14,0.4); padding: 15px; border-radius: 6px; margin-bottom: 15px; border-left: 3px solid var(--accent);">
+                    <h4 style="color: var(--accent); margin-top: 0; font-family: 'Orbitron'; font-size: 0.9rem;">TEAM LEADER</h4>
+                    <p style="margin: 3px 0;"><strong>Name:</strong> ${escapeHtml(t.leader_name)} (${escapeHtml(t.leader_year || '1st Year')})</p>
+                    <p style="margin: 3px 0;"><strong>College:</strong> ${escapeHtml(t.college)}</p>
+                    <p style="margin: 3px 0;"><strong>Email:</strong> ${escapeHtml(t.email)} | <strong>Phone:</strong> ${escapeHtml(t.phone)}</p>
+                </div>
+
+                <div style="background: rgba(1,6,14,0.4); padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                    <h4 style="color: #fff; margin-top: 0; font-family: 'Orbitron'; font-size: 0.9rem;">ADDITIONAL TEAM MEMBERS (${members.length})</h4>
+                    ${members.length ? members.map((m, i) => `
+                        <div style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <strong>Member ${i+2}:</strong> ${escapeHtml(m.name || 'N/A')} 
+                            <span class="badge-year">${escapeHtml(m.year || '1st Year')}</span> | 
+                            ${escapeHtml(m.email || 'N/A')} | ${escapeHtml(m.phone || 'N/A')}
+                        </div>
+                    `).join('') : '<p style="color: #8496a8;">No additional members recorded.</p>'}
+                </div>
+
+                <div style="background: rgba(1,6,14,0.4); padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                    <h4 style="color: var(--accent); margin-top: 0; font-family: 'Orbitron'; font-size: 0.9rem;">PROPOSED SOLUTION</h4>
+                    <p style="line-height: 1.5; color: #cfd8dc; white-space: pre-wrap; margin: 0;">${escapeHtml(t.proposed_solution || 'No solution description submitted.')}</p>
+                </div>
+
+                <div style="font-size: 0.8rem; color: #8496a8; text-align: right;">
+                    Registered on: ${t.registration_date || 'N/A'}
+                </div>
+            `;
+            document.getElementById('detailsModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+            });
+        }
+    </script>
+</body>
+</html>

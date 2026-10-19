@@ -4,6 +4,7 @@
   "description": "Official website and team registration portal for Aharada Kaushal Kumbh 2026",
   "main": "server.js",
   "scripts": {
+    "build": "echo build",
     "start": "node server.js",
     "dev": "node server.js"
   },

@@ -88,6 +88,9 @@ app.use(express.static(__dirname));
 app.use('/uploads', express.static(UPLOAD_DIR));
 
 // Page routes
+app.get('/health', (req, res) => res.status(200).send('OK'));
+app.get('/healthz', (req, res) => res.status(200).send('OK'));
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
@@ -299,6 +302,6 @@ app.get('/api/admin/export-csv', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
     console.log(`Aharada Hackathon Server running on port ${PORT}`);
 });

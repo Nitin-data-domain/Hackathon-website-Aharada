@@ -185,13 +185,7 @@ if (form) {
             return;
         }
 
-        // 2. Validate Payment Screenshot
-        const screenshotInput = document.getElementById('paymentScreenshot');
-        if (!screenshotInput.files || !screenshotInput.files[0]) {
-            alert("⚠️ PAYMENT CONFIRMATION REQUIRED:\n\nPlease upload the screenshot of your ₹500 UPI registration fee payment.");
-            screenshotInput.focus();
-            return;
-        }
+        // 2. Free Registration - No Payment Validation Required
 
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> TRANSMITTING &amp; VERIFYING...';
         btn.disabled = true;
@@ -222,8 +216,11 @@ if (form) {
             formData.append('proposedSolution', document.getElementById('proposedSolution').value.trim());
             formData.append('teamSize', document.getElementById('teamSize').value);
             formData.append('members', JSON.stringify(members));
-            formData.append('transactionId', document.getElementById('transactionId').value.trim());
-            formData.append('paymentScreenshot', screenshotInput.files[0]);
+            formData.append('transactionId', 'FREE');
+            if (document.getElementById('transactionId')) {
+                const val = document.getElementById('transactionId').value.trim();
+                if (val) formData.append('transactionId', val);
+            }
 
             // Submit to local backend server
             const response = await fetch('/api/register', {
@@ -250,7 +247,7 @@ if (form) {
                     problemStatement: document.getElementById('problemStatement').value,
                     proposedSolution: document.getElementById('proposedSolution').value.trim(),
                     teamSize: parseInt(document.getElementById('teamSize').value),
-                    transactionId: document.getElementById('transactionId').value.trim(),
+                    transactionId: 'FREE',
                     members: members
                 };
                 fetch(googleScriptURL, {
@@ -265,12 +262,12 @@ if (form) {
             btn.style.color = "#00e676";
             btn.style.background = "rgba(0, 230, 118, 0.15)";
 
-            alert(`✅ REGISTRATION COMPLETED!\n\nTeam "${document.getElementById('teamName').value}" has been registered successfully with ₹500 fee submission.\n\nTransaction ID: ${document.getElementById('transactionId').value}\n\nOur Event Head Mr. Kunal Rawat and team will verify the payment and email you confirmation details.`);
+            alert(`🎉 REGISTRATION COMPLETED!\n\nTeam "${document.getElementById('teamName').value}" has been registered successfully (Free Registration).\n\nOur Event Head Mr. Kunal Rawat and team will email you confirmation details.`);
 
             form.reset();
             document.getElementById('dynamic-team-members').innerHTML = '';
-            document.getElementById('previewThumbBox').style.display = 'none';
-            document.getElementById('fileUploadPrompt').style.display = 'block';
+            if (document.getElementById('previewThumbBox')) document.getElementById('previewThumbBox').style.display = 'none';
+            if (document.getElementById('fileUploadPrompt')) document.getElementById('fileUploadPrompt').style.display = 'block';
             checkDiversity();
 
         } catch (error) {

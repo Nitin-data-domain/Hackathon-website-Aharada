@@ -942,3 +942,9 @@ body::before {
     .footer-logo-container { width: 180px; }
     .footer-flex { font-size: 0.85rem; }
 }
+
+/* Free Registration Notice Card */
+.free-reg-card {
+    flex-wrap: wrap;
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.08);
+}

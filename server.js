@@ -120,7 +120,7 @@ app.post('/api/register', upload.single('paymentScreenshot'), (req, res) => {
         const problemStatement = (body.problemStatement || '').trim();
         const proposedSolution = (body.proposedSolution || '').trim();
         const teamSize = parseInt(body.teamSize || 3);
-        const transactionId = (body.transactionId || '').trim();
+        const transactionId = (body.transactionId || 'FREE').trim();
         const screenshotFilename = req.file ? req.file.filename : (body.paymentScreenshot || '');
 
         if (!leaderName || !email || !phone || !college || !teamName || !problemStatement) {
@@ -153,7 +153,7 @@ app.post('/api/register', upload.single('paymentScreenshot'), (req, res) => {
         db.run(query, [
             leaderName, email, phone, college, teamName, problemStatement,
             proposedSolution, teamSize, JSON.stringify(members), leaderYear,
-            transactionId, screenshotFilename, 'Pending'
+            transactionId, screenshotFilename, 'Free'
         ], function (err) {
             if (err) {
                 console.error('Insert error:', err.message);
@@ -161,7 +161,7 @@ app.post('/api/register', upload.single('paymentScreenshot'), (req, res) => {
             }
             res.status(201).json({
                 status: 'success',
-                message: 'Registration and payment submission completed successfully!',
+                message: 'Registration completed successfully!',
                 teamId: this.lastID
             });
         });
@@ -217,8 +217,8 @@ app.get('/api/admin/registrations', (req, res) => {
                 total_participants: totalParticipants,
                 verified_payments: verifiedCount,
                 pending_payments: pendingCount,
-                total_revenue: teams.length * 500,
-                verified_revenue: verifiedCount * 500,
+                total_revenue: 0,
+                verified_revenue: 0,
                 tracks: tracks,
                 colleges: colleges
             },

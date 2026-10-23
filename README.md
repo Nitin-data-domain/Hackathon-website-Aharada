@@ -8,7 +8,7 @@ Official website and team registration portal for **Aharada Kaushal Kumbh 2026**
 - **Event Finale Date:** 26 October 2026
 - **Prize Pool:** ₹10,000 (1st: ₹5,000 | 2nd: ₹3,000 | 3rd: ₹2,000)
 - **Team Size:** 3 to 5 Members per team
-- **Registration Fee:** ₹500 per team
+- **Registration Fee:** FREE (No registration fee required)
 - **Event Head:** Mr. Kunal Rawat (📞 +91 8299729308 | ✉️ kunal@aharadaedu.in)
 
 ---
@@ -36,14 +36,10 @@ To encourage cross-batch collaboration and peer learning:
 
 ---
 
-## 💳 Payment & Verification System
-- **Registration Fee:** ₹500 per team.
-- **Payment Method:** UPI QR code (Google Pay, PhonePe, Paytm, BHIM).
-- **Payee Account:** `PRABHU DRONE RESEARCH AND DEVELOPMENT LLP`
-- **UPI ID:** `9389981575@okbizaxis`
-- Teams enter their 12-digit UPI Transaction ID (UTR) and upload a payment receipt screenshot during registration.
-
----
+## 🎁 Registration
+- **Registration Fee:** FREE for all participating teams.
+- **Eligibility:** College students from all universities.
+- **Requirements:** Complete team registration form with 3-5 members respecting academic year diversity. No payment or transaction ID required.
 
 ## 🛡️ Admin Portal (`/admin`)
 The platform includes an administrative dashboard:

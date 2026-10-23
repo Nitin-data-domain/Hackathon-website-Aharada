@@ -113,7 +113,7 @@ def register():
         proposed_solution = data.get('proposedSolution', '').strip()
         team_size = int(data.get('teamSize', 3))
         leader_year = data.get('leaderYear', '1st Year').strip()
-        transaction_id = data.get('transactionId', '').strip()
+        transaction_id = data.get('transactionId', 'FREE').strip() or 'FREE'
 
         # Validate mandatory fields
         if not (leader_name and email and phone and college and team_name and problem_statement):
@@ -155,7 +155,7 @@ def register():
             leader_year,
             transaction_id,
             screenshot_filename,
-            'Pending'
+            'Free'
         ))
         conn.commit()
         new_id = cursor.lastrowid
@@ -163,7 +163,7 @@ def register():
 
         return jsonify({
             "status": "success",
-            "message": "Registration and payment submission completed successfully!",
+            "message": "Registration completed successfully!",
             "teamId": new_id
         }), 201
 
@@ -234,8 +234,8 @@ def admin_registrations():
         "total_participants": total_participants,
         "verified_payments": verified_count,
         "pending_payments": pending_count,
-        "total_revenue": len(teams) * 500,
-        "verified_revenue": verified_count * 500,
+        "total_revenue": 0,
+        "verified_revenue": 0,
         "tracks": tracks_distribution,
         "colleges": colleges_distribution
     }

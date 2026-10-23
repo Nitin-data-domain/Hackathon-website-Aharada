@@ -269,10 +269,10 @@
                         </div>
                     </div>
                     <div class="rule-box">
-                        <div class="rule-badge" style="background: rgba(255, 215, 0, 0.15); color: #ffd700;"><i class="fas fa-qrcode"></i></div>
+                        <div class="rule-badge" style="background: rgba(0, 230, 118, 0.15); color: #00e676;"><i class="fas fa-gift"></i></div>
                         <div class="rule-text">
-                            <h4 style="color: #ffd700;">Registration Fee (₹500)</h4>
-                            <p>₹500 per team. Scan the official UPI QR during registration and upload the transaction screenshot.</p>
+                            <h4 style="color: #00e676;">Free Registration</h4>
+                            <p>Registration is 100% free for all eligible teams. No registration fee required.</p>
                         </div>
                     </div>
                     <div class="rule-box">
@@ -564,55 +564,24 @@
                         
                         <div id="dynamic-team-members" style="display: flex; flex-direction: column; gap: 15px;"></div>
 
-                        <!-- Registration Fee & UPI Payment Section -->
-                        <div class="payment-section-card">
-                            <div class="payment-header">
-                                <div class="payment-title"><i class="fas fa-qrcode text-accent"></i> REGISTRATION FEE PAYMENT</div>
-                                <span class="payment-fee-tag">₹500 / TEAM</span>
-                            </div>
-                            <p class="cyber-text" style="font-size: 0.85rem; margin-bottom: 12px; color: #b0bec5;">
-                                Scan the official UPI QR code with Google Pay, PhonePe, Paytm, or BHIM to pay the team registration fee of ₹500.
-                            </p>
-                            <div class="payment-body">
-                                <div class="payment-qr-wrap" onclick="window.open('payment_qr.jpg', '_blank')" title="Click to view full size">
-                                    <img src="payment_qr.jpg" alt="Aharada Hackathon UPI QR Code">
-                                    <span style="font-size: 0.7rem; color: #333; font-weight: bold; display: block; margin-top: 4px;">TAP TO ENLARGE</span>
+                        <!-- Free Registration Notice -->
+                        <div class="free-reg-card" style="background: rgba(0, 230, 118, 0.06); border: 1px solid rgba(0, 230, 118, 0.3); border-radius: 12px; padding: 20px; margin-top: 15px; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(0, 230, 118, 0.15); color: #00e676; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+                                    <i class="fas fa-gift"></i>
                                 </div>
-                                <div class="payment-details-box">
-                                    <div style="font-size: 0.85rem; color: #8496a8;">PAYEE NAME:</div>
-                                    <div style="font-size: 0.95rem; color: #fff; font-weight: 700; letter-spacing: 0.5px;">PRABHU DRONE RESEARCH AND DEVELOPMENT LLP</div>
-                                    
-                                    <div style="font-size: 0.85rem; color: #8496a8; margin-top: 4px;">UPI ID:</div>
-                                    <div class="upi-id-pill">
-                                        <span id="upiText">9389981575@okbizaxis</span>
-                                        <button type="button" class="btn-copy-upi" onclick="copyUPI()">COPY</button>
-                                    </div>
-                                    <div style="font-size: 0.85rem; color: #ffd700; margin-top: 4px;">
-                                        <i class="fas fa-check-circle"></i> Fee Amount: <strong>₹500 per team</strong>
-                                    </div>
+                                <div>
+                                    <div style="color: #fff; font-family: var(--font-heading); font-size: 1rem; font-weight: 700; letter-spacing: 0.5px;">REGISTRATION FEE: FREE</div>
+                                    <div style="color: #8496a8; font-size: 0.85rem; margin-top: 2px;">100% Free entry for all students. No payment or transaction ID required.</div>
                                 </div>
                             </div>
-
-                            <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 18px;">
-                                <input type="text" id="transactionId" placeholder="UPI TRANSACTION ID / UTR NUMBER (12 DIGITS)" required>
-                                
-                                <div class="file-upload-container">
-                                    <input type="file" id="paymentScreenshot" accept="image/*" required onchange="handleScreenshotPreview(this)">
-                                    <div id="fileUploadPrompt">
-                                        <i class="fas fa-cloud-upload-alt text-accent" style="font-size: 1.8rem; margin-bottom: 6px;"></i>
-                                        <p style="margin: 0; color: #fff; font-size: 0.95rem; font-weight: 600;">UPLOAD PAYMENT SCREENSHOT (CONFIRMATION)</p>
-                                        <p style="margin: 4px 0 0; color: #8496a8; font-size: 0.8rem;">Click to select receipt screenshot (PNG, JPG, WEBP)</p>
-                                    </div>
-                                    <div id="previewThumbBox" class="preview-thumb-box">
-                                        <img id="screenshotPreview" src="" alt="Payment Receipt Preview">
-                                        <p id="screenshotFileName" style="color: var(--accent); font-size: 0.85rem; margin-top: 6px;"></p>
-                                    </div>
-                                </div>
-                            </div>
+                            <span style="background: rgba(0, 230, 118, 0.2); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.4); font-weight: 700; font-size: 0.8rem; padding: 6px 14px; border-radius: 20px; letter-spacing: 1px; white-space: nowrap;">
+                                ₹0 FREE ENTRY
+                            </span>
                         </div>
 
                         <button type="submit" class="btn-primary mt-4" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                            <i class="fas fa-paper-plane"></i> SUBMIT REGISTRATION &amp; PAYMENT
+                            <i class="fas fa-paper-plane"></i> SUBMIT REGISTRATION
                         </button>
                     </form>
                 </div>
@@ -651,7 +620,7 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Yes, there is a registration fee of ₹500 per team. You can pay via the official UPI QR code (Google Pay, PhonePe, Paytm, BHIM) during registration and upload your transaction confirmation screenshot with UTR number.</p>
+                            <p>No, registration is completely free for all teams. There are no registration fees or hidden charges to participate in Aharada Kaushal Kumbh 2026.</p>
                         </div>
                     </div>
                     <div class="faq-item">
